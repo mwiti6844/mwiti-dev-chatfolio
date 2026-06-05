@@ -80,7 +80,18 @@
   }
 
   /* ── Append user message ───────────────────────────────────── */
+  function hasRecentUserMessage(text) {
+    const chatWindow = document.getElementById('chat-window');
+    if (!chatWindow) return false;
+    const normalized = (text || '').trim().replace(/\s+/g, ' ');
+    const userMessages = Array.from(chatWindow.querySelectorAll('.user-message .message-bubble'));
+    const last = userMessages[userMessages.length - 1];
+    if (!last) return false;
+    return last.textContent.trim().replace(/\s+/g, ' ') === normalized;
+  }
+
   function appendUserMessage(text) {
+    if (hasRecentUserMessage(text)) return;
     const chatWindow = document.getElementById('chat-window');
     const intro = document.getElementById('intro-screen');
     if (intro && !intro.classList.contains('fade-out')) {
@@ -339,7 +350,7 @@
           message:    userMessage,
           history:    conversationHistory.slice(-8),
           visitorType,
-          maxTokens:  220,
+          maxTokens:  170,
           flowId:     detectIntent(userMessage), // pin context for known question patterns
         })
       });

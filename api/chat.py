@@ -33,8 +33,8 @@ KNOWLEDGE_BASE: List[Dict[str, str]] = [
         "tags": "david who nairobi kenya ai engineer background",
         "content": (
             "David Mwiti Muthiru is an AI Engineer based in Nairobi, Kenya. "
-            "2+ years building production LLM infrastructure — not demos, not prototypes. "
-            "Live systems serving real users. Founding AI engineer at Paysoko Systems. "
+            "2+ years building production LLM infrastructure and agentic systems. "
+            "Currently working at Paysoko Systems on practical AI for business workflows. "
             "Open to remote engineering roles worldwide and conversations about his product Anchor. "
             "Contact: david.mwiti.muthiru@gmail.com | +254 716 003 852 | "
             "github.com/mwiti6844 | linkedin.com/in/david-mwiti-38316b18b/"
@@ -44,51 +44,39 @@ KNOWLEDGE_BASE: List[Dict[str, str]] = [
         "id": "paysoko_overview",
         "tags": "paysoko systems founding engineer llm infrastructure production",
         "content": (
-            "At Paysoko Systems, David was the founding AI engineer — he built the company's entire "
-            "LLM infrastructure from scratch. Three production systems: (1) Uliza ERP NL2SQL engine, "
-            "(2) AI Credit Memo Workstation, (3) Uliza Lending conversational backend. "
-            "All systems are live, serving 1,000+ concurrent users across HR, procurement, finance, and lending."
+            "David currently works at Paysoko Systems as an AI engineer focused on production LLM "
+            "and automation systems for enterprise and fintech workflows. He can discuss this work "
+            "professionally at the architecture-pattern level: natural-language data interfaces, "
+            "controlled business workflows, backend integration, observability, and data safety."
         ),
     },
     {
         "id": "nl2sql",
         "tags": "nl2sql natural language sql erp 600 tables non-technical staff security redis langsmith latency",
         "content": (
-            "David built a schema-aware NL2SQL engine over a 600+ table MySQL ERP at Paysoko. "
-            "200+ non-technical staff query the system in plain English. "
-            "Triple-layer security: JWT workspace extraction → AST-level SQL rewriting blocks all DDL/DML "
-            "→ cross-tenant data leakage impossible by design. "
-            "Latency reduced from ~4s to under 1.6s via Redis caching and prompt optimisation. "
-            "40% improvement in answer relevance scores measured with LangSmith. "
-            "FK translation layer injects LEFT JOIN patterns so the LLM maps human-readable field names correctly. "
-            "Stack: LangGraph, FastAPI, Redis, Docker, LangSmith, GitHub Actions CI/CD."
+            "One Paysoko workstream involves natural-language access to business and ERP data. "
+            "The public-facing engineering value is schema-aware retrieval, guarded query generation, "
+            "role-aware answers, and production backend integration. Keep details professional and avoid "
+            "exposing internal schema, customer, or operational specifics."
         ),
     },
     {
         "id": "credit_memo",
         "tags": "credit memo langgraph multi-agent pipeline pii masking qa daemon financial ratio dscr ltv deterministic",
         "content": (
-            "David built a 5-phase LangGraph multi-agent credit memo pipeline at Paysoko: "
-            "Extraction → PII Masking → Financial Analyst → Document Architect → QA Daemon. "
-            "Reduced credit memo production from up to 95 minutes to under 5 minutes. "
-            "100% deterministic financial ratio accuracy: the QA Daemon re-computes every ratio "
-            "(DSCR, LTV, Current Ratio, D/E, Gross Margin) independently and raises a hard error on any discrepancy. "
-            "Zero hallucinated numbers in production. "
-            "PII masking gate intercepts all data BEFORE any LLM call — names, IDs, account numbers, phone numbers. "
-            "Dual Dockerfile: cloud mode (Claude API) and air-gapped Ollama for offline environments. "
-            "Serves 1,000+ concurrent users."
+            "Another Paysoko workstream involves AI-assisted credit analysis and document workflows. "
+            "The public-facing engineering value is multi-step workflow design, extraction, validation, "
+            "PII-aware handling, and QA checks around model output. Do not over-share internal process "
+            "details or present confidential operating metrics."
         ),
     },
     {
         "id": "lending_backend",
         "tags": "lending conversational backend par delinquency role-aware redis session",
         "content": (
-            "David built a multi-turn conversational AI backend at Paysoko for the lending team: "
-            "FastAPI + LangGraph allowing staff to query delinquency rates, PAR metrics, and disbursement summaries "
-            "by natural language. Role-aware response depth (loan officers vs branch managers vs executives). "
-            "Redis-backed multi-turn session memory. "
-            "Proactive insights background worker runs hourly, computing portfolio summaries and surfacing anomalies. "
-            "LangSmith tracing with 3-tier evaluation at 100% sampling."
+            "David has also worked on conversational backend patterns for lending and portfolio insight "
+            "workflows. The important public-facing skills are multi-turn state, role-aware responses, "
+            "retrieval over business metrics, and production reliability."
         ),
     },
     {
@@ -199,12 +187,10 @@ KNOWLEDGE_BASE: List[Dict[str, str]] = [
         "id": "consulting",
         "tags": "consulting independent freelance clients rag faiss azure ml qualagents",
         "content": (
-            "Before Paysoko, David worked as an Independent AI/ML Consultant (Nov 2023 – Sep 2024) "
-            "for research and enterprise clients across the US, Europe, and Africa. "
-            "Built adaptive RAG pipelines with FAISS and Hugging Face embedding models. "
-            "Built QualAgents — a LangGraph multi-agent platform for structured qualitative reasoning "
-            "over unstructured interview data. "
-            "Deployed Azure-hosted ML models analysing 100K+ data points for predictive segmentation."
+            "Before Paysoko, David worked on AI/ML consulting and prototype-to-product work. "
+            "Public-facing themes include RAG pipelines, embeddings, evaluation, data workflows, "
+            "and practical AI tooling for research or enterprise use cases. Avoid inventing client "
+            "names, metrics, or unreleased project names."
         ),
     },
     {
@@ -333,7 +319,7 @@ def retrieve(query: str, k: int = 4) -> tuple:
 BASE_SYSTEM_PROMPT = """You are the voice of David Mwiti Muthiru's portfolio — not a corporate chatbot, not a press release. Think of yourself as a sharp, slightly witty friend who knows David well and genuinely believes in his work.
 
 WHO DAVID IS:
-AI Engineer based in Nairobi, Kenya. 2+ years shipping production LLM infrastructure — real systems, real users, real metrics. Chess player (Dave_Mwiti on chess.com), footballer, hiker, gamer, night owl. Founding AI engineer at Paysoko. Building Anchor. Open to remote roles worldwide.
+AI Engineer based in Nairobi, Kenya. 2+ years building production LLM infrastructure and agentic systems. Currently working at Paysoko Systems. Building Anchor. Open to remote roles worldwide and professional conversations about Anchor.
 
 VOICE & TONE:
 - Warm, direct, occasionally witty. Confident without being arrogant.
@@ -350,9 +336,11 @@ BEHAVIOR RULES:
 3. When someone describes what they're building → match it to David's closest project, cite a real metric, argue the fit.
 4. Technical questions → go deep on decisions, tradeoffs, specifics.
 5. Only describe Anchor's evidence layer (turn_id / char spans) when the question is actually about how findings are captured.
-6. Keep it tight: 2–3 short paragraphs max. No bullet lists. No filler. No "great question!".
+6. Keep it tight: usually 1–2 short paragraphs. No bullet lists unless the user asks. No filler. No "great question!".
 7. If asked something genuinely unknown → say so honestly and point to david.mwiti.muthiru@gmail.com.
 8. Represent David with quiet confidence. Lead with evidence, not adjectives.
+9. Do not invent projects, clients, metrics, employers, or credentials. Use only retrieved context.
+10. Keep Paysoko/current-employer discussion professional and high-level. Do not expose internal details or overstate confidential metrics.
 
 RETRIEVED CONTEXT (the actual facts — use these, don't invent):
 {context}"""
