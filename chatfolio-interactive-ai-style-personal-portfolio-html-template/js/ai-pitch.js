@@ -29,6 +29,9 @@
   let voiceModeOn           = sessionStorage.getItem(VOICE_MODE_KEY) === 'true';
   let currentUtterance      = null;
   let lastSourceIds         = ''; // fingerprint of the previous turn's citations (de-dup)
+  let voiceFinalTranscript  = '';
+  let voiceDraftTranscript  = '';
+  let voiceSilenceTimer     = null;
 
   /* ── Guardrail patterns ────────────────────────────────────── */
   const OFF_TOPIC_PATTERNS = [
@@ -396,33 +399,51 @@
     }
 
     recognition = new SpeechRecognition();
-    recognition.continuous     = false;
+    recognition.continuous     = true;
     recognition.interimResults = true;
     recognition.lang           = 'en-US';
 
     recognition.onresult = (event) => {
-      const isFinal    = event.results[event.results.length - 1].isFinal;
-      const transcript = event.results[event.results.length - 1][0].transcript;
+      let interimTranscript = '';
+      for (let i = event.resultIndex; i < event.results.length; i++) {
+        const transcript = event.results[i][0].transcript;
+        if (event.results[i].isFinal) {
+          voiceFinalTranscript += `${transcript} `;
+        } else {
+          interimTranscript += transcript;
+        }
+      }
+
+      voiceDraftTranscript = `${voiceFinalTranscript}${interimTranscript}`.trim();
       const chatInput  = document.getElementById('chat-input');
       if (chatInput) {
-        chatInput.value = transcript;
+        chatInput.value = voiceDraftTranscript;
         chatInput.dispatchEvent(new Event('input'));
       }
-      if (isFinal) {
-        stopListening();
-        if (transcript.trim()) {
-          // Stop any TTS before sending
-          stopSpeaking();
-          window.generateAndProcessResponse(transcript.trim());
-        }
+
+      if (voiceSilenceTimer) clearTimeout(voiceSilenceTimer);
+      if (voiceFinalTranscript.trim()) {
+        voiceSilenceTimer = setTimeout(() => {
+          submitVoiceTranscript();
+        }, 2200);
       }
     };
 
     recognition.onerror = () => stopListening();
-    recognition.onend   = () => { if (isListening) stopListening(); };
+    recognition.onend   = () => {
+      if (!isListening) return;
+      if (voiceDraftTranscript.trim()) {
+        if (voiceSilenceTimer) clearTimeout(voiceSilenceTimer);
+        voiceSilenceTimer = setTimeout(() => {
+          submitVoiceTranscript();
+        }, 1400);
+      } else {
+        try { recognition.start(); } catch (_) {}
+      }
+    };
 
     voiceBtn.addEventListener('click', () => {
-      if (isListening) { stopListening(); }
+      if (isListening) { submitVoiceTranscript(); }
       else             { stopSpeaking(); startListening(); }
     });
 
@@ -432,6 +453,9 @@
   function startListening() {
     if (!recognition || isListening) return;
     isListening = true;
+    voiceFinalTranscript = '';
+    voiceDraftTranscript = '';
+    if (voiceSilenceTimer) clearTimeout(voiceSilenceTimer);
     try { recognition.start(); } catch (_) {}
     const voiceBtn = document.getElementById('voice-button');
     if (voiceBtn) { voiceBtn.classList.add('listening'); voiceBtn.title = 'Listening… click to stop'; }
@@ -442,11 +466,27 @@
   function stopListening() {
     if (!recognition) return;
     isListening = false;
+    if (voiceSilenceTimer) clearTimeout(voiceSilenceTimer);
     try { recognition.stop(); } catch (_) {}
     const voiceBtn = document.getElementById('voice-button');
     if (voiceBtn) { voiceBtn.classList.remove('listening'); voiceBtn.title = 'Voice input'; }
     const footer = document.getElementById('chat-footer-text');
     if (footer) footer.innerHTML = '<i class="fa-regular fa-comment-dots"></i> Ask me anything — or tap the mic to speak';
+  }
+
+  function submitVoiceTranscript() {
+    const transcript = (voiceDraftTranscript || voiceFinalTranscript).trim();
+    stopListening();
+    if (!transcript) return;
+    stopSpeaking();
+    voiceFinalTranscript = '';
+    voiceDraftTranscript = '';
+    const chatInput = document.getElementById('chat-input');
+    if (chatInput) {
+      chatInput.value = '';
+      chatInput.dispatchEvent(new Event('input'));
+    }
+    window.generateAndProcessResponse(transcript);
   }
 
   // ── AI enrichment: fires AFTER the static prefilled template runs ──
