@@ -1,0 +1,18 @@
+{
+  "version": 2,
+  "outputDirectory": "chatfolio-interactive-ai-style-personal-portfolio-html-template",
+  "routes": [
+    {
+      "src": "/api/chat",
+      "dest": "/api/chat.py"
+    },
+    {
+      "src": "/api/livekit-token",
+      "dest": "/api/livekit-token.py"
+    },
+    {
+      "src": "/(.*)",
+      "dest": "/$1"
+    }
+  ]
+}

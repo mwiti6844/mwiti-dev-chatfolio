@@ -1,0 +1,9 @@
+{
+  "name": "david-mwiti-portfolio",
+  "version": "1.0.0",
+  "description": "David Mwiti Muthiru — AI Engineer Portfolio",
+  "private": true,
+  "engines": {
+    "node": ">=18"
+  }
+}

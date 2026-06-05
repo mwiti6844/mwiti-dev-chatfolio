@@ -1,0 +1,37 @@
+# Secrets and local environment
+.env
+.env.*
+!.env.example
+
+# Vercel local project state
+.vercel/
+
+# Dependencies and local virtual environments
+node_modules/
+.venv/
+venv/
+env/
+
+# Python generated files
+__pycache__/
+*.py[cod]
+*.pyo
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+
+# macOS and editor/tool state
+.DS_Store
+.claude/
+.vscode/
+.idea/
+
+# Logs and temporary output
+*.log
+tmp/
+temp/
+
+# Purchased theme vendor docs / unused PHP mailer source
+Documentation/
+chatfolio-interactive-ai-style-personal-portfolio-html-template/contact.php
+chatfolio-interactive-ai-style-personal-portfolio-html-template/assets/php/
