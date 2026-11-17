@@ -83,7 +83,9 @@
       msg.append(row);
     }
     log.append(msg);
-    renderChips(turn.followups || []);
+    // Never leave the visitor without a next step: fall back to starters they haven't tried yet.
+    const asked = new Set(state.turns.filter((t) => t.role === 'user').map((t) => t.content));
+    renderChips(turn.followups?.length ? turn.followups : STARTERS.filter((q) => !asked.has(q)).slice(0, 3));
   }
 
   // "- item" lines become a real list; everything else stays paragraphs. textContent only.
