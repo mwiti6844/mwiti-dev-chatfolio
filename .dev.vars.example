@@ -1,0 +1,12 @@
+# Copy to .dev.vars for `npx wrangler dev` (git-ignored). In production use: npx wrangler secret put <NAME>
+# Never commit real values or put them in frontend files.
+GROQ_API_KEY=
+OPENROUTER_API_KEY=
+# Optional: only used when a visitor ticks the opt-in trace box.
+LANGSMITH_API_KEY=
+# EU accounts: https://eu.api.smith.langchain.com
+LANGSMITH_ENDPOINT=https://api.smith.langchain.com
+# Optional: comma-separated terms redacted from model output (belt and braces for confidential names).
+FORBIDDEN_TERMS=
+# Reserved; voice read-aloud is not implemented yet.
+CARTESIA_API_KEY=

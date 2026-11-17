@@ -1,0 +1,67 @@
+/* PATCH floating guide. Uses tokens from style.css (:root). */
+.visually-hidden{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+.patch-launcher{position:fixed;right:22px;bottom:22px;z-index:60;display:flex;align-items:center;gap:12px;padding:12px 18px;min-height:52px;background:#c9d3ff;color:#11151c;border:2px solid #11151c;border-radius:10px;box-shadow:5px 5px 0 var(--blue);font:13px 'DM Sans',sans-serif;cursor:pointer;transition:transform .15s,box-shadow .15s}
+.patch-launcher:hover{transform:translate(-2px,-2px);box-shadow:7px 7px 0 var(--blue)}
+.patch-launcher strong{display:block;font-size:16px;letter-spacing:-.01em}
+.patch-launcher small{font:10px 'DM Mono',monospace}
+.patch-launch-text{text-align:left}
+.patch-dots{width:22px;height:22px;background:radial-gradient(circle at 25% 30%,#8298ff 4px,transparent 5px),radial-gradient(circle at 75% 30%,#f8ca45 4px,transparent 5px),radial-gradient(circle at 25% 75%,#5fd4a0 4px,transparent 5px),radial-gradient(circle at 75% 75%,#ff8a8a 4px,transparent 5px)}
+.patch-panel{position:fixed;right:22px;bottom:22px;z-index:61;width:min(410px,calc(100vw - 32px));height:min(640px,calc(100dvh - 44px));display:flex;flex-direction:column;background:var(--panel);color:var(--ink);border:1px solid #4a5468;border-radius:14px;box-shadow:8px 9px 0 var(--blue);overflow:hidden}
+.patch-panel[hidden]{display:none}
+.patch-head{display:flex;align-items:flex-start;gap:10px;padding:16px 16px 12px;border-bottom:1px dashed #394153}
+.patch-head>div{flex:1}
+.patch-head h2{margin:0;font:800 20px 'DM Sans',sans-serif;letter-spacing:-.03em}
+.patch-head p{margin:2px 0 0;font-size:12px;color:var(--muted)}
+.patch-status{font:10px 'DM Mono',monospace;color:var(--muted);padding-top:6px;white-space:nowrap}
+.patch-status.live{color:#5fd4a0}.patch-status.offline{color:var(--yellow)}
+.patch-close{background:none;border:1px solid #6c7891;color:var(--ink);border-radius:8px;padding:6px 10px;min-height:36px;font:11px 'DM Mono',monospace;cursor:pointer}
+.patch-log{flex:1;overflow-y:auto;padding:14px 16px;display:flex;flex-direction:column;gap:12px;overscroll-behavior:contain}
+.patch-msg{max-width:92%;font-size:14px;line-height:1.5}
+.patch-msg p{margin:0}
+.patch-msg.user{align-self:flex-end;background:#2a3550;padding:9px 12px;border-radius:12px 12px 2px 12px;white-space:pre-wrap;overflow-wrap:anywhere}
+.patch-msg.bot{align-self:flex-start;display:flex;flex-direction:column;gap:8px}
+.patch-msg.thinking{color:var(--muted);font:12px 'DM Mono',monospace}
+.patch-mode{align-self:flex-start;font:9.5px 'DM Mono',monospace;letter-spacing:.06em;padding:2px 6px;border-radius:4px;border:1px solid currentColor}
+.patch-mode.live{color:#5fd4a0}.patch-mode.smalltalk{color:#a7b8ff}.patch-mode.preview{color:var(--yellow)}
+.patch-card{display:flex;flex-direction:column;gap:3px;padding:10px 12px;background:#101620;border:1px solid #3d4a5f;border-left:3px solid var(--blue);border-radius:8px;color:var(--ink);text-decoration:none}
+.patch-card:hover{border-color:var(--blue)}
+.patch-card small{font:10px 'DM Mono',monospace;color:var(--yellow);text-transform:uppercase}
+.patch-card strong{font-size:14px}
+.patch-card span{font-size:12.5px;color:var(--muted)}
+.patch-actions,.patch-chips{display:flex;flex-wrap:wrap;gap:6px}
+.patch-chips{padding:0 16px 10px}
+.patch-actions button,.patch-chips button{background:none;border:1px dashed #6c7891;color:var(--ink);border-radius:999px;padding:7px 12px;min-height:36px;font:12px 'DM Sans',sans-serif;cursor:pointer;text-align:left}
+.patch-actions button{border-style:solid;border-color:var(--blue);color:#c9d3ff}
+.patch-actions button:hover,.patch-chips button:hover{background:#263147}
+.patch-form{display:flex;gap:8px;padding:10px 16px;border-top:1px solid #394153}
+.patch-form textarea{flex:1;resize:none;background:#101620;color:var(--ink);border:1px solid #4a5468;border-radius:8px;padding:9px 10px;font:14px 'DM Sans',sans-serif}
+.patch-send{background:var(--blue);color:#11151c;border:0;border-radius:8px;padding:0 16px;min-height:44px;font:600 13px 'DM Sans',sans-serif;cursor:pointer}
+.patch-send:disabled{opacity:.5;cursor:wait}
+.patch-foot{padding:0 16px 12px;font-size:11px;color:var(--muted);line-height:1.45}
+.patch-foot p{margin:6px 0 0}
+.patch-foot a{color:#c9d3ff}
+.patch-optin{display:flex;gap:6px;align-items:flex-start;cursor:pointer}
+.patch-optin input{margin-top:2px}
+@media(max-width:600px){
+  .patch-launcher{right:12px;bottom:12px;padding:10px 14px}
+  .patch-launcher small{display:none}
+  .patch-panel{right:0;bottom:0;width:100vw;height:100dvh;border-radius:0;box-shadow:none;border:0}
+  .patch-form textarea{font-size:16px} /* stops iOS zoom-on-focus */
+}
+@media(prefers-reduced-motion:reduce){.patch-launcher{transition:none}.patch-launcher:hover{transform:none}}
+/* Calmer replies: spinner, lists, compact cards and chips */
+.patch-msg.thinking{flex-direction:row;align-items:center;gap:8px;font:12.5px 'DM Mono',monospace;color:#d98e5f}
+.patch-glyph{display:inline-block;width:1em;text-align:center;font-size:15px}
+.patch-msg ul{margin:0;padding-left:18px;display:grid;gap:4px}
+.patch-msg li::marker{color:var(--blue)}
+.patch-msg.bot{gap:10px}
+.patch-chips{gap:6px;padding:0 16px 8px}
+.patch-chips button{font-size:12px;padding:5px 11px;min-height:32px;color:var(--muted)}
+.patch-chips button:hover{color:var(--ink)}
+.patch-mail{display:inline-flex;align-items:center;min-height:36px;padding:7px 12px;border-radius:999px;background:var(--yellow);color:#11151c;font:600 12px 'DM Sans',sans-serif;text-decoration:none}
+.patch-mail:hover{filter:brightness(1.08)}
+.patch-streaming{margin:0;white-space:pre-wrap}
+.patch-streaming::after{content:'▍';margin-left:1px;color:var(--blue);animation:patchCaret 1s steps(2) infinite}
+@keyframes patchCaret{50%{opacity:0}}
+@media(prefers-reduced-motion:reduce){.patch-streaming::after{animation:none}}
+.patch-for{font:normal 11.5px 'DM Mono',monospace;color:#a7b8ff;margin-top:2px}

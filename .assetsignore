@@ -1,0 +1,18 @@
+# Only the public site is uploaded as static assets. Keep internal and confidential files out.
+.*
+node_modules
+tests
+server
+scripts
+cv-source
+qa-screenshots
+test-results
+playwright-report
+HANDOFF.md
+README.md
+package.json
+package-lock.json
+package.sh
+playwright.config.js
+wrangler.toml
+LOCAL_START.sh

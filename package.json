@@ -1,9 +1,19 @@
 {
   "name": "david-mwiti-portfolio",
-  "version": "1.0.0",
-  "description": "David Mwiti Muthiru — AI Engineer Portfolio",
   "private": true,
-  "engines": {
-    "node": ">=18"
+  "description": "Static portfolio + PATCH guide on a Cloudflare Worker. No build step.",
+  "scripts": {
+    "serve": "python3 -m http.server 8000",
+    "test": "playwright test",
+    "dev": "npx wrangler dev --persist-to \"${TMPDIR:-/tmp}/portfolio-wrangler-state\"",
+    "test:server": "node --test server/",
+    "deploy": "npx wrangler deploy"
+  },
+  "devDependencies": {
+    "@axe-core/playwright": "^4.10.2",
+    "@playwright/test": "1.59.1"
+  },
+  "dependencies": {
+    "@vercel/functions": "^3.11.3"
   }
 }
